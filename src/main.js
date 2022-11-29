@@ -3,23 +3,25 @@ import './style.css';
 import { fetchProductsList } from './helpers/fetchFunctions';
 import { createProductElement } from './helpers/shopFunctions';
 
+document.querySelector('.cep-button').addEventListener('click', searchCep);
+
 function loading() {
-  const container = document.querySelector('.container');
+  const container = document.querySelector('.products');
   const msgLoading = document.createElement('h2');
-  msgLoading.id = 'msgLoading';
+  msgLoading.classList.add('loading');
   msgLoading.innerHTML = 'carregando...';
   container.appendChild(msgLoading);
 }
-function load() {
-  const msgLoading = document.querySelector('#msgLoading');
-  msgLoading.innerHTML = '';
+function loaded() {
+  const container = document.querySelector('.products');
+  const msgLoading = document.querySelector('.loading');
+  container.removeChild(msgLoading);
 }
-
-document.querySelector('.cep-button').addEventListener('click', searchCep);
-const listProducts = document.querySelector('.products');
 loading();
 const listComputers = await fetchProductsList('computador');
-load();
+loaded();
+const listProducts = document.querySelector('.products');
+
 listComputers.forEach((computer) => {
   const product = {
     id: computer.id,
