@@ -17,12 +17,12 @@ describe('Teste a função fetchProduct', () => {
     const URL = 'https://api.mercadolibre.com/items/MLB1405519561'
     expect(fetch).toHaveBeenCalledWith(URL);
   });
-  it(`fetchProduct('MLB1405519561')  retorna informações do produto`, async () => {
+  it(`fetchProduct('MLB1405519561') retorna informações do produto`, async () => {
     const sandisk = await fetchProduct('MLB1405519561')
     expect(sandisk).toEqual(product)
   });
 
-  it(`fetchProduct() lança mensagem de erro 'Termo de busca não informado' quando executada sem argumento`,    async () =>  {
-    await expect(fetchProducts()).rejects.toThrow(/^Termo de busca não informado$/);
+  it(`fetchProduct() lança mensagem de erro 'ID não informado' quando executada sem argumento`,    async () =>  {
+    await expect(fetchProducts()).rejects.toThrow(/^ID não informado$/);
   })
 });
