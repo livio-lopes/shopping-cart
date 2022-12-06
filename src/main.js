@@ -4,11 +4,11 @@ import { fetchProductsList } from './helpers/fetchFunctions';
 import { createProductElement, createCustomElement } from './helpers/shopFunctions';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
-const msgLoading = 'carregando...';
-const listProducts = document.querySelector('.products');
 
 const listComputers = async () => {
   try {
+    const listProducts = document.querySelector('.products');
+    const msgLoading = 'carregando...';
     const loading = createCustomElement('h2', 'loading', msgLoading);
     listProducts.appendChild(loading);
     const list = await fetchProductsList('computador');
@@ -26,9 +26,11 @@ const listComputers = async () => {
   } catch (error) {
     error.message = 'Algum erro ocorreu, recarregue a página e tente novamente';
     error.className = 'error';
+    const listProducts = document.querySelector('.products');
     const errorElement = createCustomElement('h2', error.className, error.message);
     listProducts.appendChild(errorElement);
   }
 };
-
-listComputers();
+window.onload = () => {
+  listComputers();
+};
