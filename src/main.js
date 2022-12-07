@@ -43,14 +43,17 @@ const listComputers = async () => {
     listProducts.appendChild(errorElement);
   }
 };
-window.onload = async () => {
-  listComputers();
+const recoveryCart = async () => {
   const idsLS = getSavedCartIDs();
   const myCart = document.querySelector('.cart__products');
-  const listCart = await Promise.all(idsLS.map((id) => getInfoProduct(id)))
-    .then((v) => v);
-  listCart.forEach((infoItem) => {
-    const itemCart = createProductElement(infoItem, true);
-    myCart.appendChild(itemCart);
+  const recCart = Promise.all(idsLS.map((id) => getInfoProduct(id))).then((data) => data);
+  const awaitCart = await recCart;
+  awaitCart.forEach((item) => {
+    const recItem = createProductElement(item, true);
+    myCart.appendChild(recItem);
   });
+};
+window.onload = () => {
+  listComputers();
+  recoveryCart();
 };
