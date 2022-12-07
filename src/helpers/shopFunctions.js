@@ -60,6 +60,18 @@ const removeCartProduct = (li, id) => {
  * @param {string} product.pictures - Imagens do produto.
  * @returns {Element} Elemento de um product do carrinho.
  */
+
+const subTotal = async (id) => {
+  const { price } = await fetchProduct(id);
+  const subtotal = document.querySelector('.total-price');
+  subtotal.innerHTML = parseFloat(subtotal.innerHTML) - price;
+};
+
+const addTotal = async (id) => {
+  const { price } = await fetchProduct(id);
+  const subtotal = document.querySelector('.total-price');
+  subtotal.innerHTML = parseFloat(subtotal.innerHTML) + price;
+};
 export const createCartProductElement = ({ id, title, price, pictures }) => {
   const li = document.createElement('li');
   li.className = 'cart__product';
@@ -88,7 +100,10 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   );
   li.appendChild(removeButton);
 
-  li.addEventListener('click', () => removeCartProduct(li, id));
+  li.addEventListener('click', () => {
+    subTotal(id);
+    removeCartProduct(li, id);
+  });
   return li;
 };
 
@@ -142,6 +157,7 @@ export const createProductElement = (info, cart = false) => {
     const infoProduct = await getInfoProduct(id);
     const itemCart = createProductElement(infoProduct, true);
     myCart.appendChild(itemCart);
+    addTotal(id);
   });
   section.appendChild(cartButton);
 

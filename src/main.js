@@ -52,6 +52,8 @@ const recoveryCart = async () => {
     const recItem = createProductElement(item, true);
     myCart.appendChild(recItem);
   });
+  const subtotal = document.querySelector('.total-price');
+  subtotal.innerHTML = awaitCart.reduce((acc, cur) => acc + cur.price, 0);
 };
 window.onload = () => {
   listComputers();
